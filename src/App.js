@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import "./index.css";
+import TodoForm from "./components/TodoForm";
+import { connect } from "react-redux";
+import Todo from "./components/Todo";
 
-function App() {
+function App({ todos }) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App flex justify-center">
+      <div className="w-[550px] mt-14 pb-[100px] rounded border bg-blue-200">
+        <TodoForm />
+        <div className="">
+          {todos.map((todo, idx) => (
+            <Todo idx={idx} key={todo.id} todo={todo}></Todo>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
-
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    todos: state.todos.todos,
+  };
+};
+export default connect(mapStateToProps, null)(App);
